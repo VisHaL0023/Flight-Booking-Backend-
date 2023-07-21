@@ -85,9 +85,42 @@ async function destroyAirport(req, res) {
     }
 }
 
+/**
+ * UPDATE : /airports/:id
+ * req-body {}
+ */
+async function updateAirport(req, res) {
+    try {
+        const airports = await AirportService.updateAirport(req.params.id, {
+            name: req.body.name,
+            code: req.body.code,
+            address: req.body.address,
+            cityId: req.body.cityId
+        });
+        if(airports){
+            SuccessResponse.data = {
+                name: req.body.name,
+                code: req.body.code,
+                address: req.body.address,
+                cityId: req.body.cityId
+            }
+            SuccessResponse.message = 'Successfully updated data';
+        }
+        return res
+                .status(StatusCodes.OK)
+                .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(ErrorResponse);
+    }
+}
+
 module.exports = {
     createAirport,
     getAirports,
     getAirport,
-    destroyAirport
+    destroyAirport,
+    updateAirport
 }
