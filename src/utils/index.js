@@ -1,2 +1,3 @@
-module.exports = {
+module.exports = { 
+    CompareTime : require('./helpers/datetime-helpers')
 }
